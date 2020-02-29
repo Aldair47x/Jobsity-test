@@ -26,6 +26,7 @@ import Unarchive from "@material-ui/icons/Unarchive";
 import Language from "@material-ui/icons/Language";
 // core components/views for Admin layout
 import DashboardPage from "views/Dashboard/Dashboard.js";
+import CalendarPage from "views/Calendar/Calendarr.js"
 import UserProfile from "views/UserProfile/UserProfile.js";
 import TableList from "views/TableList/TableList.js";
 import Typography from "views/Typography/Typography.js";
@@ -43,6 +44,14 @@ const dashboardRoutes = [
     rtlName: "لوحة القيادة",
     icon: Dashboard,
     component: DashboardPage,
+    layout: "/admin"
+  },
+  {
+    path: "/calendar",
+    name: "Calendar",
+    rtlName: "لوحة القيادة",
+    icon: 'date_range',
+    component: CalendarPage,
     layout: "/admin"
   },
   {
@@ -97,17 +106,9 @@ const dashboardRoutes = [
     path: "/rtl-page",
     name: "RTL Support",
     rtlName: "پشتیبانی از راست به چپ",
-    icon: Language,
+    icon: 'date_range',
     component: RTLPage,
     layout: "/rtl"
-  },
-  {
-    path: "/upgrade-to-pro",
-    name: "Upgrade To PRO",
-    rtlName: "التطور للاحترافية",
-    icon: Unarchive,
-    component: UpgradeToPro,
-    layout: "/admin"
   }
 ];
 

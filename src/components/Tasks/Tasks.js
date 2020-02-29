@@ -55,42 +55,7 @@ export default function Tasks(props) {
               />
             </TableCell>
             <TableCell className={tableCellClasses}>{tasks[value]}</TableCell>
-            <TableCell className={classes.tableActions}>
-              <Tooltip
-                id="tooltip-top"
-                title="Edit Task"
-                placement="top"
-                classes={{ tooltip: classes.tooltip }}
-              >
-                <IconButton
-                  aria-label="Edit"
-                  className={classes.tableActionButton}
-                >
-                  <Edit
-                    className={
-                      classes.tableActionButtonIcon + " " + classes.edit
-                    }
-                  />
-                </IconButton>
-              </Tooltip>
-              <Tooltip
-                id="tooltip-top-start"
-                title="Remove"
-                placement="top"
-                classes={{ tooltip: classes.tooltip }}
-              >
-                <IconButton
-                  aria-label="Close"
-                  className={classes.tableActionButton}
-                >
-                  <Close
-                    className={
-                      classes.tableActionButtonIcon + " " + classes.close
-                    }
-                  />
-                </IconButton>
-              </Tooltip>
-            </TableCell>
+            
           </TableRow>
         ))}
       </TableBody>

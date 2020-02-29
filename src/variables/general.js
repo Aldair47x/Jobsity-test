@@ -2,25 +2,23 @@
 // // // Tasks for TasksCard - see Dashboard view
 // #############################
 
-var bugs = [
-  'Sign contract for "What are conference organizers afraid of?"',
-  "Lines From Great Russian Literature? Or E-mails From My Boss?",
-  "Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit",
-  "Create 4 Invisible User Experiences you Never Knew About"
+var mandatory = [
+  'Ability to add a new "reminder" (max 30 chars) for a user entered day and time. Also, include a city.',
+  "Display reminders on the calendar view in the correct time order.",
+  "Allow the user to select color when creating a reminder and display it appropriately.",
+  "Ability to edit reminders – including changing text, city, day, time and color.",
+  "Add a weather service call from a free API such as Open Weather Map, and get the weather forecast (ex. Rain) for the date of the calendar reminder based on the city.",
+  'Unit test the functionality: Ability to add a new "reminder" (max 30 chars) for a user entered day and time. Also, include a city.'
 ];
-var website = [
-  "Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit",
-  'Sign contract for "What are conference organizers afraid of?"'
+var optional = [
+  "Expand the calendar to support more than the current month.",
+  'Properly handle overflow when multiple reminders appear on the same date.',
+  "Functionality to delete one or ALL the reminders for a specific day"
 ];
-var server = [
-  "Lines From Great Russian Literature? Or E-mails From My Boss?",
-  "Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit",
-  'Sign contract for "What are conference organizers afraid of?"'
-];
+
 
 module.exports = {
   // these 3 are used to create the tasks lists in TasksCard - Dashboard view
-  bugs,
-  website,
-  server
+  mandatory,
+  optional
 };

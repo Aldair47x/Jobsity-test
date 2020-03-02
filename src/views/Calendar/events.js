@@ -2,7 +2,7 @@ const now = new Date()
 
 export default [
   {
-    city: 'prueba',
+    city: 'New York',
     color: 0,
     id: 0,
     title: 'All Day Event very long title',
@@ -11,7 +11,7 @@ export default [
     end: new Date(2015, 3, 1),
   },
   {
-    city: 'prueba',
+    city: 'New York',
     color: 0,
     id: 1,
     title: 'Long Event',
@@ -20,7 +20,7 @@ export default [
   },
 
   {
-    city: 'prueba',
+    city: 'New York',
     color: 1,
     id: 2,
     title: 'DTS STARTS',
@@ -29,7 +29,7 @@ export default [
   },
 
   {
-    city: 'prueba',
+    city: 'New York',
     color: 1,
     id: 3,
     title: 'DTS ENDS',
@@ -38,7 +38,7 @@ export default [
   },
 
   {
-    city: 'prueba',
+    city: 'New York',
     color: 2,
     id: 4,
     title: 'Some Event',
@@ -46,7 +46,7 @@ export default [
     end: new Date(2015, 3, 10, 0, 0, 0),
   },
   {
-    city: 'prueba',
+    city: 'New York',
     color: 2,
     id: 5,
     title: 'Conference',
@@ -55,7 +55,7 @@ export default [
     desc: 'Big conference for important people',
   },
   {
-    city: 'prueba',
+    city: 'New York',
     color: 0,
     id: 6,
     title: 'Meeting',
@@ -64,7 +64,7 @@ export default [
     desc: 'Pre-meeting meeting, to prepare for the meeting',
   },
   {
-    city: 'prueba',
+    city: 'New York',
     color: 0,
     id: 7,
     title: 'Lunch',
@@ -73,7 +73,7 @@ export default [
     desc: 'Power lunch',
   },
   {
-    city: 'prueba',
+    city: 'New York',
     color: 1,
     id: 8,
     title: 'Meeting',
@@ -81,7 +81,7 @@ export default [
     end: new Date(2015, 3, 12, 15, 0, 0, 0),
   },
   {
-    city: 'prueba',
+    city: 'New York',
     color: 1,
     id: 9,
     title: 'Happy Hour',
@@ -90,7 +90,7 @@ export default [
     desc: 'Most important meal of the day',
   },
   {
-    city: 'prueba',
+    city: 'New York',
     color: 2,
     id: 10,
     title: 'Dinner',
@@ -98,7 +98,7 @@ export default [
     end: new Date(2015, 3, 12, 21, 0, 0, 0),
   },
   {
-    city: 'prueba',
+    city: 'New York',
     color: 2,
     id: 11,
     title: 'Birthday Party',
@@ -106,7 +106,7 @@ export default [
     end: new Date(2015, 3, 13, 10, 30, 0),
   },
   {
-    city: 'prueba',
+    city: 'New York',
     color: 0,
     id: 12,
     title: 'Late Night Event',
@@ -114,7 +114,7 @@ export default [
     end: new Date(2015, 3, 18, 2, 0, 0),
   },
   {
-    city: 'prueba',
+    city: 'New York',
     color: 0,
     id: 12.5,
     title: 'Late Same Night Event',
@@ -122,7 +122,7 @@ export default [
     end: new Date(2015, 3, 17, 23, 30, 0),
   },
   {
-    city: 'prueba',
+    city: 'New York',
     color: 1,
     id: 13,
     title: 'Multi-day Event',
@@ -130,7 +130,7 @@ export default [
     end: new Date(2015, 3, 22, 2, 0, 0),
   },
   {
-    city: 'prueba',
+    city: 'New York',
     color: 1,
     id: 14,
     title: 'Today',
@@ -138,7 +138,7 @@ export default [
     end: new Date(new Date().setHours(new Date().getHours() + 3)),
   },
   {
-    city: 'prueba',
+    city: 'New York',
     color: 2,
     id: 15,
     title: 'Point in Time Event',
@@ -146,7 +146,7 @@ export default [
     end: now,
   },
   {
-    city: 'prueba',
+    city: 'New York',
     color: 2,
     id: 17,
     title: 'Dutch Song Producing',
@@ -154,7 +154,7 @@ export default [
     end: new Date(2015, 3, 14, 20, 0, 0),
   },
   {
-    city: 'prueba',
+    city: 'New York',
     color: 0,
     id: 18,
     title: 'Itaewon Halloween Meeting',
@@ -162,7 +162,7 @@ export default [
     end: new Date(2015, 3, 14, 17, 30, 0),
   },
   {
-    city: 'prueba',
+    city: 'New York',
     color: 0,
     id: 19,
     title: 'Online Coding Test',
@@ -170,7 +170,7 @@ export default [
     end: new Date(2015, 3, 14, 20, 30, 0),
   },
   {
-    city: 'prueba',
+    city: 'Florida',
     color: 1,
     id: 20,
     title: 'An overlapped Event',
@@ -178,7 +178,7 @@ export default [
     end: new Date(2015, 3, 14, 18, 30, 0),
   },
   {
-    city: 'prueba',
+    city: 'Florida',
     color: 1,
     id: 21,
     title: 'Phone Interview',
@@ -186,7 +186,7 @@ export default [
     end: new Date(2015, 3, 14, 18, 30, 0),
   },
   {
-    city: 'prueba',
+    city: 'Florida',
     color: 0,
     id: 22,
     title: 'Cooking Class',
@@ -194,7 +194,7 @@ export default [
     end: new Date(2015, 3, 14, 19, 0, 0),
   },
   {
-    city: 'prueba',
+    city: 'Florida',
     color: 2,
     id: 23,
     title: 'Go to the gym',

@@ -11,7 +11,8 @@ import Swal from 'sweetalert2'
 
 import events from './events'
 
-
+const uniqid = require('uniqid');
+const axios = require('axios');
 const cities = JSON.parse(JSON.stringify(Object.assign({}, require('full-countries-cities').getCities('United States'))));
 const colorClass = {
     0: 'Green',
@@ -32,6 +33,7 @@ const Event = ({ event }) => {
                     <p style={{color: 'black'}}>
                         {event.city}
                     </p>
+                    {event.desc && ':  ' + event.desc}
                 </span>
             </div>
         )
@@ -46,6 +48,7 @@ const Event = ({ event }) => {
                     <p style={{color: 'black'}}>
                         {event.city}
                     </p>
+                    {event.desc && ':  ' + event.desc}
                 </span>
             </div>
         )
@@ -60,6 +63,7 @@ const Event = ({ event }) => {
                     <p style={{color: 'black'}}>
                         {event.city}
                     </p>
+                    {event.desc && ':  ' + event.desc}
                 </span>
             </div>
         )
@@ -70,6 +74,7 @@ const Event = ({ event }) => {
             <span>
                 <strong>{event.title}</strong>
                 <p>{event.city}</p>
+                {event.desc && ':  ' + event.desc}
             </span>
         )
     }
@@ -113,10 +118,10 @@ export default class Calendarr extends Component {
                 inputValidator: (value) => {
                     return new Promise((resolve, reject) => {
 
-                        if (value.length <= 30) {
+                        if (value.length > 0 && value.length <= 30) {
                             resolve()
                         } else {
-                            resolve('You need to write write a reminder less than a 30 chars')
+                            resolve('You need to write a reminder less than a 30 chars')
                         }
                     })
                 }
@@ -164,18 +169,23 @@ export default class Calendarr extends Component {
                 }
             }
         
-            ]).then((result) => {
+            ]).then(async (result) => {
             if (result.value) {
-                console.log(result.value);
-                const answers = JSON.stringify(result.value)
-                console.log(answers);
+                const auxText = result.value[0];
+                const auxCity = this.state.cities[ result.value[1] ];
+                const auxColor = parseInt(result.value[2]);
+                await axios.get(`api.openweathermap.org/data/2.5/forecast/daily?q=${auxCity}&cnt=5&appid=f1fee41184b348ce41ba5acdf09f9f4e`)
+                .then(function (response) {
+                    // handle success
+                    console.log(response, 'clima');
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error, 'clima');
+                })
                 Swal.fire({
                 title: 'All done!',
-                html: `
-                    Your answers:
-                    <pre><code>${answers}</code></pre>
-                `,
-                confirmButtonText: 'Lovely!'
+                confirmButtonText: 'Confirm'
                 })
                 this.setState({
                     events: [
@@ -183,26 +193,66 @@ export default class Calendarr extends Component {
                         {
                             start,
                             end,
-                            title: 'prueba'
+                            title: result.value[0],
+                            city: auxCity,
+                            color: auxColor,
+                            id: uniqid()
                         },
                     ],
                 })
             }
         })
-
-        // const title = window.prompt('New Event name')
-        
         
     }
 
-    
+    handleEvent = (e) => {
+        
 
+        Swal.fire({
+        title: 'Delete your REMINDER!',
+        text: `You won't be able to revert this!
+        \n
+        ${e.title}`,
+        icon: 'warning',
+        showCancelButton: true,
+        showCloseButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel it.',
+        reverseButtons: true
+        }).then((result) => {
+        if (result.value) {
+            let newEvents = this.state.events.filter(ev => ev !== e);
+            console.log(newEvents);
+            
+            this.setState({
+                events:newEvents
+            });
+            
+            Swal.fire(
+            'Deleted!',
+            'Your event has been deleted.',
+            'success'
+            )
+        } else if (
+            /* Read more about handling dismissals below */
+            result.dismiss === Swal.DismissReason.cancel
+        ) {
+            Swal.fire(
+            'Cancelled',
+            'Your event is safe :)',
+            'error'
+            )
+        }
+        })
+    }
+
+    
+    
       
     
     render() {
 
-        console.log(this.state.cities[6-1]);
-
+        
         return (
             <div style={{height: '100vh', margin: '10px'}}>
 
@@ -214,7 +264,7 @@ export default class Calendarr extends Component {
                     defaultView={Views.MONTH}
                     dayPropGetter={this.customDayPropGetter}
                     slotPropGetter={this.customSlotPropGetter}
-                    onSelectEvent={event => alert(event.title)}
+                    onSelectEvent={event => this.handleEvent(event)}
                     onSelectSlot={this.handleSelect}
                     components={{
                         event: Event,

@@ -34,6 +34,13 @@ const Event = ({ event }) => {
                         {event.city}
                     </p>
                     {event.desc && ':  ' + event.desc}
+                    {event.weather != null ? 
+                    <p style={{color: 'black'}}>
+                        Weather forecast: {event.weather}
+                    </p> : 
+                    <p style={{color: 'black'}}>
+                        No weather forecast to this date
+                    </p>}
                 </span>
             </div>
         )
@@ -82,10 +89,22 @@ const Event = ({ event }) => {
 
 const EventAgenda = ({ event }) => {
     return (
-      <span>
-        <em style={{ color: 'blue' }}>{event.title}</em>
-        <p>{event.desc}</p>
-      </span>
+      
+        <span>
+            <em style={{ color: 'blue' }}>{event.title}</em>
+            <p style={{color: 'black'}}>
+                {event.city}
+            </p>
+            {event.desc && ':  ' + event.desc}
+            {event.weather != null ? 
+            <p style={{color: 'black'}}>
+                Weather forecast: {event.weather}
+            </p> : 
+            <p style={{color: 'black'}}>
+                No weather forecast to this date
+            </p>}
+        </span>
+      
     )
 }
 
@@ -171,18 +190,40 @@ export default class Calendarr extends Component {
         
             ]).then(async (result) => {
             if (result.value) {
+                
                 const auxText = result.value[0];
                 const auxCity = this.state.cities[ result.value[1] ];
                 const auxColor = parseInt(result.value[2]);
-                await axios.get(`api.openweathermap.org/data/2.5/forecast/daily?q=${auxCity}&cnt=5&appid=f1fee41184b348ce41ba5acdf09f9f4e`)
+                let auxWeather = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${auxCity},us&appid=f1fee41184b348ce41ba5acdf09f9f4e`)
+                // http://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=f1fee41184b348ce41ba5acdf09f9f4e
                 .then(function (response) {
+                    console.log('Open Weather Map response:',response.data.list, 'Current time:', start.getTime()/1000);
                     // handle success
-                    console.log(response, 'clima');
+                    return response.data.list.map( ts => {
+                        
+                        if(start.getTime()/1000 === ts.dt){
+                            
+                            let weather = ts.weather.map( m => {
+                                if(m.main){
+                                    return m.main;
+                                }
+                                else{
+                                    return null;
+                                }
+                            })
+                            console.log('yes!', weather)
+                            return weather;
+                            // return ts.weather.main;
+                        }
+                    });
+                    
                 })
                 .catch(function (error) {
                     // handle error
                     console.log(error, 'clima');
+                    return null;
                 })
+                
                 Swal.fire({
                 title: 'All done!',
                 confirmButtonText: 'Confirm'
@@ -193,13 +234,15 @@ export default class Calendarr extends Component {
                         {
                             start,
                             end,
-                            title: result.value[0],
+                            weather: auxWeather,
+                            title: auxText,
                             city: auxCity,
                             color: auxColor,
                             id: uniqid()
                         },
                     ],
                 })
+                console.log(this.state.events);
             }
         })
         
@@ -222,8 +265,6 @@ export default class Calendarr extends Component {
         }).then((result) => {
         if (result.value) {
             let newEvents = this.state.events.filter(ev => ev !== e);
-            console.log(newEvents);
-            
             this.setState({
                 events:newEvents
             });

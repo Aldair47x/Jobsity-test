@@ -2,6 +2,7 @@ const now = new Date()
 
 export default [
   {
+    weather: 'Clouds',
     city: 'New York',
     color: 0,
     id: 0,
@@ -11,6 +12,7 @@ export default [
     end: new Date(2015, 3, 1),
   },
   {
+    weather: 'Clouds',
     city: 'New York',
     color: 0,
     id: 1,
@@ -20,6 +22,7 @@ export default [
   },
 
   {
+    weather: 'Clouds',
     city: 'New York',
     color: 1,
     id: 2,
@@ -29,6 +32,7 @@ export default [
   },
 
   {
+    weather: 'Clouds',
     city: 'New York',
     color: 1,
     id: 3,
@@ -38,6 +42,7 @@ export default [
   },
 
   {
+    weather: 'Clouds',
     city: 'New York',
     color: 2,
     id: 4,
@@ -46,6 +51,7 @@ export default [
     end: new Date(2015, 3, 10, 0, 0, 0),
   },
   {
+    weather: 'Clouds',
     city: 'New York',
     color: 2,
     id: 5,
@@ -55,6 +61,7 @@ export default [
     desc: 'Big conference for important people',
   },
   {
+    weather: 'Rain',
     city: 'New York',
     color: 0,
     id: 6,
@@ -64,6 +71,7 @@ export default [
     desc: 'Pre-meeting meeting, to prepare for the meeting',
   },
   {
+    weather: 'Rain',
     city: 'New York',
     color: 0,
     id: 7,
@@ -73,6 +81,7 @@ export default [
     desc: 'Power lunch',
   },
   {
+    weather: 'Rain',
     city: 'New York',
     color: 1,
     id: 8,
@@ -81,6 +90,7 @@ export default [
     end: new Date(2015, 3, 12, 15, 0, 0, 0),
   },
   {
+    weather: 'Rain',
     city: 'New York',
     color: 1,
     id: 9,
@@ -90,6 +100,7 @@ export default [
     desc: 'Most important meal of the day',
   },
   {
+    weather: 'Rain',
     city: 'New York',
     color: 2,
     id: 10,
@@ -98,6 +109,7 @@ export default [
     end: new Date(2015, 3, 12, 21, 0, 0, 0),
   },
   {
+    weather: 'Rain',
     city: 'New York',
     color: 2,
     id: 11,
@@ -106,6 +118,7 @@ export default [
     end: new Date(2015, 3, 13, 10, 30, 0),
   },
   {
+    weather: 'Rain',
     city: 'New York',
     color: 0,
     id: 12,
@@ -114,6 +127,7 @@ export default [
     end: new Date(2015, 3, 18, 2, 0, 0),
   },
   {
+    weather: 'Rain',
     city: 'New York',
     color: 0,
     id: 12.5,
@@ -122,6 +136,7 @@ export default [
     end: new Date(2015, 3, 17, 23, 30, 0),
   },
   {
+    weather: 'Rain',
     city: 'New York',
     color: 1,
     id: 13,
@@ -130,6 +145,7 @@ export default [
     end: new Date(2015, 3, 22, 2, 0, 0),
   },
   {
+    weather: 'Rain',
     city: 'New York',
     color: 1,
     id: 14,
@@ -138,6 +154,7 @@ export default [
     end: new Date(new Date().setHours(new Date().getHours() + 3)),
   },
   {
+    weather: 'Rain',
     city: 'New York',
     color: 2,
     id: 15,
@@ -146,6 +163,7 @@ export default [
     end: now,
   },
   {
+    weather: 'Rain',
     city: 'New York',
     color: 2,
     id: 17,
@@ -154,6 +172,7 @@ export default [
     end: new Date(2015, 3, 14, 20, 0, 0),
   },
   {
+    weather: 'Rain',
     city: 'New York',
     color: 0,
     id: 18,
@@ -162,6 +181,7 @@ export default [
     end: new Date(2015, 3, 14, 17, 30, 0),
   },
   {
+    weather: 'Rain',
     city: 'New York',
     color: 0,
     id: 19,
@@ -170,6 +190,7 @@ export default [
     end: new Date(2015, 3, 14, 20, 30, 0),
   },
   {
+    weather: 'Rain',
     city: 'Florida',
     color: 1,
     id: 20,
@@ -178,6 +199,7 @@ export default [
     end: new Date(2015, 3, 14, 18, 30, 0),
   },
   {
+    weather: 'Clouds',
     city: 'Florida',
     color: 1,
     id: 21,
@@ -186,6 +208,7 @@ export default [
     end: new Date(2015, 3, 14, 18, 30, 0),
   },
   {
+    weather: 'Clouds',
     city: 'Florida',
     color: 0,
     id: 22,
@@ -194,6 +217,7 @@ export default [
     end: new Date(2015, 3, 14, 19, 0, 0),
   },
   {
+    weather: 'Clouds',
     city: 'Florida',
     color: 2,
     id: 23,

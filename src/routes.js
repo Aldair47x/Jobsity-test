@@ -27,7 +27,6 @@ const dashboardRoutes = [
   {
     path: "/dashboard",
     name: "Dashboard",
-    rtlName: "لوحة القيادة",
     icon: Dashboard,
     component: DashboardPage,
     layout: "/admin"
@@ -35,7 +34,6 @@ const dashboardRoutes = [
   {
     path: "/calendar",
     name: "Calendar",
-    rtlName: "لوحة القيادة",
     icon: 'date_range',
     component: CalendarPage,
     layout: "/admin"

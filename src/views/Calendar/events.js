@@ -1,5 +1,5 @@
 const now = new Date()
-
+// Export events for mocks data
 export default [
   {
     weather: 'Clouds',

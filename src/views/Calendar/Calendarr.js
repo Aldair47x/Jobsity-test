@@ -10,17 +10,20 @@ import Swal from 'sweetalert2'
 
 
 import events from './events'
-
+// import uniqueID for the events
 const uniqid = require('uniqid');
+// import axios for http request 
 const axios = require('axios');
+// import full contries cities for a specific state
 const cities = JSON.parse(JSON.stringify(Object.assign({}, require('full-countries-cities').getCities('United States'))));
+// declare const object for select options of colors
 const colorClass = {
     0: 'Green',
     1: 'Blue',
     2: 'Yellow'
 }
 
-
+// Call moment localizer to integrate moment with reac-big-calendar
 const localizer = momentLocalizer(moment);
 
 
@@ -39,7 +42,11 @@ export default class Calendarr extends Component {
         
     }
 
-
+    // function to get a response from openweathermap to handle the forecast
+    /**
+    * @param cityName City for request the weather
+    * @param currentTime The current time for the request
+    */
     requestWeather = async (cityName, currentTime) => {
         const currentTimestamp = currentTime.getTime()/1000;
         // const currentTimestamp = 1583247600;
@@ -86,6 +93,12 @@ export default class Calendarr extends Component {
 
     }
 
+
+    // function to create a new event in some range date
+    /**
+    * @param start The start range date
+    * @param end The end range date
+    */
     handleSelect = ({ start, end }) => {
         
         Swal.mixin({
@@ -184,6 +197,12 @@ export default class Calendarr extends Component {
         
     }
 
+
+    // function to delete an event from the calendar
+    /**
+    * @param e handle the event for preventDefault()
+    * @param event The event that will be deleted
+    */
     deleteEvent = (e, event) => {
         
         e.preventDefault();
@@ -225,6 +244,10 @@ export default class Calendarr extends Component {
         })
     }
 
+    // function to show some information from the event when is clicked on the calendar
+    /**
+    * @param event Even to show
+    */
     showEvent = (event) => {
         
 
@@ -244,6 +267,11 @@ export default class Calendarr extends Component {
         })
     }
 
+    // function to edit an event from the calendar
+    /**
+    * @param e handle the event for preventDefault()
+    * @param event The event that will be edited
+    */
     editEvent = (e, event) => {
         e.preventDefault();
 
@@ -379,6 +407,10 @@ export default class Calendarr extends Component {
             })
     }
 
+    // Custom component for the specific area "Agenda" for the calendar
+    /**
+    * @param event The event that will be show
+    */
     EventAgenda = ({ event }) => {
         
         
@@ -404,6 +436,10 @@ export default class Calendarr extends Component {
         )
     }
 
+    // Custom component for the events in the calendar
+    /**
+    * @param event The event that will be show
+    */
     Event = ({ event }) => {
         if(event.color === 0){
             return (

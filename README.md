@@ -77,7 +77,7 @@ Functionality to delete one or ALL the reminders for a specific day ✓
 
 ## Authors
 
-* **Aldair Bernal** - *Flil work* - [Aldair47x](https://github.com/Aldair47x)
+* **Aldair Bernal** - *Full work* - [Aldair47x](https://github.com/Aldair47x)
 * **Creative Tim** - *Base template* - [Creative Tim React Free Templates](https://www.creative-tim.com/templates/react-free)
 
 Follow me! – [aldair47x@Twitter](https://twitter.com/aldair47x) – aldair47x@gmail.com

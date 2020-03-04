@@ -20,93 +20,9 @@ const colorClass = {
     2: 'Yellow'
 }
 
+
 const localizer = momentLocalizer(moment);
 
-const Event = ({ event }) => {
-    if(event.color === 0){
-        return (
-            <div style={{backgroundColor: 'lightgreen'}}>
-                <span>
-                    <strong style={{color: 'black'}}>
-                        {event.title}
-                    </strong>
-                    <p style={{color: 'black'}}>
-                        {event.city}
-                    </p>
-                    {event.desc && ':  ' + event.desc}
-                    {event.weather != null ? 
-                    <p style={{color: 'black'}}>
-                        Weather forecast: {event.weather}
-                    </p> : 
-                    <p style={{color: 'black'}}>
-                        No weather forecast to this date
-                    </p>}
-                </span>
-            </div>
-        )
-
-    } else if( event.color === 1) {
-        return (
-            <div style={{backgroundColor: 'lightblue'}}>
-                <span>
-                    <strong style={{color: 'black'}}>
-                        {event.title}
-                    </strong>
-                    <p style={{color: 'black'}}>
-                        {event.city}
-                    </p>
-                    {event.desc && ':  ' + event.desc}
-                </span>
-            </div>
-        )
-
-    } else if(event.color === 2) {
-        return (
-            <div style={{backgroundColor: 'lightgoldenrodyellow'}}>
-               <span>
-                    <strong style={{color: 'black'}}>
-                        {event.title}
-                    </strong>
-                    <p style={{color: 'black'}}>
-                        {event.city}
-                    </p>
-                    {event.desc && ':  ' + event.desc}
-                </span>
-            </div>
-        )
-
-    } else {
-
-        return (
-            <span>
-                <strong>{event.title}</strong>
-                <p>{event.city}</p>
-                {event.desc && ':  ' + event.desc}
-            </span>
-        )
-    }
-}
-
-const EventAgenda = ({ event }) => {
-    return (
-      
-        <span>
-            <em style={{ color: 'blue' }}>{event.title}</em>
-            <p style={{color: 'black'}}>
-                {event.city}
-            </p>
-            {event.desc && ':  ' + event.desc}
-            {event.weather != null ? 
-            <p style={{color: 'black'}}>
-                Weather forecast: {event.weather}
-            </p> : 
-            <p style={{color: 'black'}}>
-                No weather forecast to this date
-            </p>}
-        </span>
-      
-    )
-}
 
 
 
@@ -118,25 +34,73 @@ export default class Calendarr extends Component {
             events,
             cities,
             colorClass
+            
         }
         
     }
 
-    handleSelect = async ({ start, end }) => {
+
+    requestWeather = async (cityName, currentTime) => {
+        const currentTimestamp = currentTime.getTime()/1000;
+        // const currentTimestamp = 1583247600;
+        let currentWeather;
+            
+        await axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${cityName},us&appid=f1fee41184b348ce41ba5acdf09f9f4e`)
+            
+            .then(response => {
+                console.log('Open Weather Map response:', response.data.list, 'Current time:', currentTimestamp);
+                // handle success
+                
+                const auxWeather = response.data.list.map( ts => {
+                    
+                    if(currentTimestamp === ts.dt){
+                        
+                        
+                        const forecast = ts.weather.map( m => {
+                            if(m.main){
+                                currentWeather = m.main;
+                                return currentWeather;
+                            }
+                            else {
+                                return null;
+                            }
+                        })
+                        
+                        
+                        return forecast;
+                    }
+                    else {
+                        return null;
+                    }
+                });
+                console.log('yes!', currentWeather)
+                return auxWeather;
+            })
+            .catch( error => {
+                // handle error
+                console.log(error, 'Api weather');
+                return null;
+            })
+        
+        return currentWeather;
+
+    }
+
+    handleSelect = ({ start, end }) => {
         
         Swal.mixin({
             input: 'text',
             confirmButtonText: 'Next &rarr;',
             showCancelButton: true,
             progressSteps: ['1', '2', '3']
-            }).queue([
-            {
+            })
+            .queue([{
                 title: 'Enter your reminder',
                 input: 'text',
                 showCancelButton: true,
                 inputValidator: (value) => {
                     return new Promise((resolve, reject) => {
-
+            
                         if (value.length > 0 && value.length <= 30) {
                             resolve()
                         } else {
@@ -186,43 +150,15 @@ export default class Calendarr extends Component {
                         }
                     })
                 }
-            }
-        
-            ]).then(async (result) => {
+            }])
+            .then( async (result) => {
             if (result.value) {
                 
                 const auxText = result.value[0];
                 const auxCity = this.state.cities[ result.value[1] ];
                 const auxColor = parseInt(result.value[2]);
-                let auxWeather = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${auxCity},us&appid=f1fee41184b348ce41ba5acdf09f9f4e`)
-                // http://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=f1fee41184b348ce41ba5acdf09f9f4e
-                .then(function (response) {
-                    console.log('Open Weather Map response:',response.data.list, 'Current time:', start.getTime()/1000);
-                    // handle success
-                    return response.data.list.map( ts => {
-                        
-                        if(start.getTime()/1000 === ts.dt){
-                            
-                            let weather = ts.weather.map( m => {
-                                if(m.main){
-                                    return m.main;
-                                }
-                                else{
-                                    return null;
-                                }
-                            })
-                            console.log('yes!', weather)
-                            return weather;
-                            // return ts.weather.main;
-                        }
-                    });
-                    
-                })
-                .catch(function (error) {
-                    // handle error
-                    console.log(error, 'clima');
-                    return null;
-                })
+                const auxWeather = await this.requestWeather(auxCity, start);
+                console.log( auxWeather );
                 
                 Swal.fire({
                 title: 'All done!',
@@ -242,20 +178,22 @@ export default class Calendarr extends Component {
                         },
                     ],
                 })
-                console.log(this.state.events);
+                
             }
         })
         
     }
 
-    handleEvent = (e) => {
+    deleteEvent = (e, event) => {
         
+        e.preventDefault();
+
 
         Swal.fire({
         title: 'Delete your REMINDER!',
-        text: `You won't be able to revert this!
-        \n
-        ${e.title}`,
+        html: `${event.title}
+        <br>
+        You won't be able to revert this!`,
         icon: 'warning',
         showCancelButton: true,
         showCloseButton: true,
@@ -264,7 +202,7 @@ export default class Calendarr extends Component {
         reverseButtons: true
         }).then((result) => {
         if (result.value) {
-            let newEvents = this.state.events.filter(ev => ev !== e);
+            let newEvents = this.state.events.filter(ev => ev !== event);
             this.setState({
                 events:newEvents
             });
@@ -287,9 +225,250 @@ export default class Calendarr extends Component {
         })
     }
 
+    showEvent = (event) => {
+        
+
+        Swal.fire({
+        title: '<strong>Reminder</strong>',
+        icon: 'info',
+        html:
+            `Text: <b>${event.title}</b>`  +
+            '<br>'  +
+            `City: <b>${event.city}</b>`  +
+            '<br>'  +
+            `Weather <b>${event.weather}</b>` ,
+        showCloseButton: true,
+        focusConfirm: false,
+        confirmButtonText: 'Ok'
     
+        })
+    }
+
+    editEvent = (e, event) => {
+        e.preventDefault();
+
+        Swal.fire({
+            title: 'Edit your REMINDER!',
+            html: `
+
+            `,
+            icon: 'warning',
+            showCancelButton: true,
+            showCloseButton: true,
+            confirmButtonText: 'Yes, edit it!',
+            cancelButtonText: 'No',
+            reverseButtons: true
+            }).then((result) => {
+            if (result.value) {
+                Swal.mixin({
+                    input: 'text',
+                    confirmButtonText: 'Next &rarr;',
+                    showCancelButton: true,
+                    progressSteps: ['1', '2', '3']
+                    })
+                    .queue([{
+                        title: 'Enter your reminder',
+                        input: 'text',
+                        value: event.title,
+                        showCancelButton: true,
+                        inputValidator: (value) => {
+                            return new Promise((resolve, reject) => {
+                    
+                                if (value.length > 0 && value.length <= 30) {
+                                    resolve()
+                                } else {
+                                    resolve('You need to write a reminder less than a 30 chars')
+                                }
+                            })
+                        }
+                    },
+                    {
+                        title: 'Select a city',
+                        input: 'select',
+                        value: event.city,
+                        inputOptions: this.state.cities,
+                        inputPlaceholder: 'Cities',
+                        showCancelButton: true,
+                        inputValidator: (value) => {
+                            return new Promise((resolve) => {
+                                if (value) {
+                                    this.setState({
+                                        ...this.state,
+                                        city: value
+                                            
+                                    })
+                                    resolve()
+                                } else {
+                                    resolve('You must select one city')
+                                }
+                            })
+                        }
+                    },
+                    {
+                        title: 'Select a color',
+                        input: 'select',
+                        inputOptions: this.state.colorClass,
+                        inputPlaceholder: 'Colors',
+                        showCancelButton: true,
+                        inputValidator: (value) => {
+                            return new Promise((resolve) => {
+                                if (value) {
+                                    this.setState({
+                                        ...this.state,
+                                        city: value
+                                            
+                                    })
+                                    resolve()
+                                } else {
+                                    resolve('You must select one color')
+                                }
+                            })
+                        }
+                    }])
+                    .then( async (result) => {
+                    if (result.value) {
+                        
+                        const auxText = result.value[0];
+                        const auxCity = this.state.cities[ result.value[1] ];
+                        const auxColor = parseInt(result.value[2]);
+                        const auxWeather = await this.requestWeather(auxCity, event.start);
+                        
+                        //find the index of object from array that you want to update
+                        const objIndex = this.state.events.findIndex(obj => obj.id === event.id);
+
+                        // make new object of updated object.   
+                        const updatedObj = { 
+                            ...this.state.events[objIndex],
+                            title: auxText,
+                            city: auxCity,
+                            color: auxColor,
+                            weather: auxWeather
+                        }
+
+                        // make final new array of objects by combining updated object.
+                        const updatedEvents = [
+                        ...this.state.events.slice(0, objIndex),
+                        updatedObj,
+                        ...this.state.events.slice(objIndex + 1),
+                        ];
+
+                        this.setState({
+                            ...this.state,
+                            events: updatedEvents
+                        })
+
+                        
+                        Swal.fire({
+                        title: 'All done!',
+                        confirmButtonText: 'Confirm'
+                        })
+                        
+                        
+                    }
+                })
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                Swal.fire(
+                'Cancelled',
+                'Your event is safe :)',
+                'error'
+                )
+            }
+            })
+    }
+
+    EventAgenda = ({ event }) => {
+        
+        
+        return (
+          
+            <span>
+                <em style={{ color: 'blue' }}>{event.title}</em>
+                <p style={{color: 'black'}}>
+                    {event.city}
+                </p>
+                {event.desc && ':  ' + event.desc}
+                {event.weather != null ? 
+                <p style={{color: 'black'}}>
+                    Weather forecast: {event.weather}
+                </p> : 
+                <p style={{color: 'black'}}>
+                    No weather forecast to this date
+                </p>}
+                <button onClick={e => {this.deleteEvent(e, event)}} style={{ float: 'right', marginRight: '5px' }}> Delete </button>
+                <button onClick={e => {this.editEvent(e, event)}} style={{ float: 'right', marginRight: '5px' }}> Edit </button>
+            </span>
+          
+        )
+    }
+
+    Event = ({ event }) => {
+        if(event.color === 0){
+            return (
+                <div style={{backgroundColor: 'lightgreen'}}>
+                    <span>
+                        <strong style={{color: 'black'}}>
+                            {event.title}
+                        </strong>
+                        <p style={{color: 'black'}}>
+                            {event.city}
+                        </p>
+                        {event.desc && ':  ' + event.desc}
+                        {event.weather != null ? 
+                        <p style={{color: 'black'}}>
+                            Weather forecast: {event.weather}
+                        </p> : 
+                        <p style={{color: 'black'}}>
+                            No weather forecast to this date
+                        </p>}
+                    </span>
+                </div>
+            )
     
-      
+        } else if( event.color === 1) {
+            return (
+                <div style={{backgroundColor: 'lightblue'}}>
+                    <span>
+                        <strong style={{color: 'black'}}>
+                            {event.title}
+                        </strong>
+                        <p style={{color: 'black'}}>
+                            {event.city}
+                        </p>
+                        {event.desc && ':  ' + event.desc}
+                    </span>
+                </div>
+            )
+    
+        } else if(event.color === 2) {
+            return (
+                <div style={{backgroundColor: 'lightgoldenrodyellow'}}>
+                   <span>
+                        <strong style={{color: 'black'}}>
+                            {event.title}
+                        </strong>
+                        <p style={{color: 'black'}}>
+                            {event.city}
+                        </p>
+                        {event.desc && ':  ' + event.desc}
+                    </span>
+                </div>
+            )
+    
+        } else {
+    
+            return (
+                <span>
+                    <strong>{event.title}</strong>
+                    <p>{event.city}</p>
+                    {event.desc && ':  ' + event.desc}
+                </span>
+            )
+        }
+    }
+
     
     render() {
 
@@ -301,16 +480,19 @@ export default class Calendarr extends Component {
                     selectable
                     events={this.state.events}
                     localizer={localizer}
-                    defaultDate={new Date(2015, 3, 12)}
+                    defaultDate={new Date(2020, 3, 12)}
                     defaultView={Views.MONTH}
                     dayPropGetter={this.customDayPropGetter}
                     slotPropGetter={this.customSlotPropGetter}
-                    onSelectEvent={event => this.handleEvent(event)}
+                    onSelectEvent={event => {
+                        this.showEvent(event);
+
+                    }}
                     onSelectSlot={this.handleSelect}
                     components={{
-                        event: Event,
+                        event: this.Event,
                         agenda: {
-                            event: EventAgenda,
+                            event: this.EventAgenda,
                         },
                     }}
                 

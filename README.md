@@ -11,57 +11,57 @@ standards, and reusability.
 <br>
 
 <h2>Mandatory Features</h2>
-<li>
-
 <ul>
+
+<li>
 Ability to add a new "reminder" (max 30 chars) for a user entered day and time. Also,
 include a city. ✓
-</ul>
+</li>
 
-<ul>
+<li>
 Display reminders on the calendar view in the correct time order. ✓
-</ul>
+</li>
 
-<ul>
+<li>
 Allow the user to select color when creating a reminder and display it appropriately. ✓
-</ul>
+</li>
 
-<ul>
+<li>
 Ability to edit reminders – including changing text, city, day, time and color. ✓
-</ul>
+</li>
 
-<ul>
+<li>
 Add a weather service call from a free API such as Open Weather Map, and get the
 weather forecast (ex. Rain) for the date of the calendar reminder based on the city. ✓
-</ul>
+</li>
 
-<ul>
+<li>
 Unit test the functionality: Ability to add a new "reminder" (max 30 chars) for a user
 entered day and time. Also, include a city.
-</ul>
-
-
 </li>
+
+
+</ul>
 
 <br>
 
 <h2>Bonus (Optional)</h2>
+<ul>
+
 <li>
-
-<ul>
 Expand the calendar to support more than the current month. ✓
-</ul>
-
-<ul>
-Properly handle overflow when multiple reminders appear on the same date. ✓
-</ul>
-
-<ul>
-Functionality to delete one or ALL the reminders for a specific day ✓
-</ul>
-
-
 </li>
+
+<li>
+Properly handle overflow when mlitiple reminders appear on the same date. ✓
+</li>
+
+<li>
+Functionality to delete one or ALL the reminders for a specific day ✓
+</li>
+
+
+</ul>
 
 <br>
 
@@ -77,7 +77,7 @@ Functionality to delete one or ALL the reminders for a specific day ✓
 
 ## Authors
 
-* **Aldair Bernal** - *Full work* - [Aldair47x](https://github.com/Aldair47x)
+* **Aldair Bernal** - *Flil work* - [Aldair47x](https://github.com/Aldair47x)
 * **Creative Tim** - *Base template* - [Creative Tim React Free Templates](https://www.creative-tim.com/templates/react-free)
 
 Follow me! – [aldair47x@Twitter](https://twitter.com/aldair47x) – aldair47x@gmail.com
